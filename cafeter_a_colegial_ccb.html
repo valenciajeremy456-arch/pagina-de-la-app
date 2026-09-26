@@ -1,0 +1,1533 @@
+<!DOCTYPE html>
+<html lang="es" class="h-full bg-slate-50">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cafetería Colegial CCB</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                    },
+                    colors: {
+                        ccb: {
+                            50: '#fdf4f5',
+                            100: '#fbe6e8',
+                            200: '#f6d2d7',
+                            300: '#eeacb5',
+                            400: '#e17a8a',
+                            500: '#cf4d63',
+                            600: '#b6324a',
+                            700: '#992238',
+                            800: '#7A1C2E', // Primary CCB Maroon / Burgundy
+                            900: '#5A1220',
+                            950: '#380811',
+                        },
+                        stationery: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 9999px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+
+        .gradient-banner {
+            background: linear-gradient(135deg, #4A101B 0%, #7A1C2E 50%, #2D0A11 100%);
+        }
+
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            #printableTicket, #printableTicket * {
+                visibility: visible;
+            }
+            #printableTicket {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body class="h-full flex flex-col font-sans text-slate-800 antialiased selection:bg-ccb-800 selection:text-white">
+
+    <!-- Header Navigation Bar -->
+    <header class="sticky top-0 z-30 bg-white/95 backdrop-blur-md border-b border-slate-200/80 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                
+                <!-- Logo & Title CCB -->
+                <div class="flex items-center space-x-3 cursor-pointer" onclick="switchTab('store')">
+                    <!-- CCB Monogram SVG Logo -->
+                    <div class="h-14 w-auto flex items-center justify-center p-1 bg-white rounded-xl shadow-sm border border-slate-100">
+                        <svg viewBox="0 0 300 240" fill="none" xmlns="http://www.w3.org/2000/svg" class="h-12 w-auto">
+                            <!-- Interlocking C 1 -->
+                            <path d="M95 55 C55 55 25 85 25 125 C25 165 55 195 95 195 C120 195 142 182 154 162 L132 148 C124 162 110 170 95 170 C70 170 50 150 50 125 C50 100 70 80 95 80 C110 80 124 88 132 102 L154 88 C142 68 120 55 95 55 Z" fill="#7A1C2E"/>
+                            <!-- Interlocking C 2 -->
+                            <path d="M130 85 C100 85 75 105 75 135 C75 165 100 185 130 185 C150 185 168 174 178 157 L160 145 C153 156 142 163 130 163 C112 163 97 150 97 135 C97 120 112 107 130 107 C142 107 153 114 160 125 L178 113 C168 96 150 85 130 85 Z" fill="#7A1C2E"/>
+                            <!-- Monogram B -->
+                            <path d="M160 60 H205 C228 60 245 74 245 93 C245 106 237 116 225 122 C240 128 250 141 250 158 C250 179 230 195 205 195 H160 V60 Z M185 82 V113 H202 C212 113 220 106 220 97 C220 88 212 82 202 82 H185 Z M185 135 V173 H205 C216 173 225 165 225 154 C225 143 216 135 205 135 H185 Z" fill="#7A1C2E"/>
+                            <!-- Coffee Bean inside lower B loop -->
+                            <ellipse cx="205" cy="154" rx="7" ry="10" fill="#7A1C2E" transform="rotate(-15 205 154)"/>
+                            <path d="M205 145 C202 149 208 159 205 163" stroke="#FFFFFF" stroke-width="1.8" stroke-linecap="round"/>
+                            <!-- CAFETERÍA Subtext -->
+                            <text x="150" y="225" font-family="'Plus Jakarta Sans', sans-serif" font-size="22" font-weight="800" fill="#7A1C2E" text-anchor="middle" letter-spacing="6">CAFETERÍA</text>
+                        </svg>
+                    </div>
+
+                    <div>
+                        <h1 class="text-xl font-black tracking-tight text-ccb-800">
+                            Cafetería Colegial CCB
+                        </h1>
+                        <p class="text-xs text-slate-500 font-semibold hidden sm:block">Alimentos, Bebidas y Útiles Escolares</p>
+                    </div>
+                </div>
+
+                <!-- Action Controls -->
+                <div class="flex items-center space-x-2 sm:space-x-3">
+                    
+                    <!-- GitHub Pages Info Button -->
+                    <button onclick="openGithubModal()" class="px-3 py-2 text-xs sm:text-sm font-semibold text-slate-600 hover:text-slate-900 bg-slate-100 hover:bg-slate-200 rounded-xl transition flex items-center space-x-2">
+                        <i class="fa-brands fa-github text-base"></i>
+                        <span class="hidden md:inline">Publicar en GitHub</span>
+                    </button>
+
+                    <!-- Admin Panel Toggle -->
+                    <button id="adminTabBtn" onclick="switchTab('admin')" class="px-3 py-2 text-xs sm:text-sm font-semibold text-slate-700 hover:text-slate-900 bg-slate-100 hover:bg-slate-200 rounded-xl transition flex items-center space-x-2 relative">
+                        <i class="fa-solid fa-clipboard-list text-ccb-800"></i>
+                        <span class="hidden sm:inline">Panel Despacho</span>
+                        <span id="pendingBadge" class="hidden absolute -top-1 -right-1 w-5 h-5 bg-red-500 text-white text-[10px] font-bold rounded-full flex items-center justify-center animate-pulse">0</span>
+                    </button>
+
+                    <!-- Cart Trigger Button -->
+                    <button onclick="toggleCartDrawer(true)" class="px-4 py-2.5 bg-ccb-800 hover:bg-ccb-900 text-white rounded-xl transition shadow-md shadow-ccb-800/20 font-medium flex items-center space-x-2.5 group">
+                        <i class="fa-solid fa-basket-shopping text-ccb-200 group-hover:scale-110 transition-transform"></i>
+                        <span class="text-sm font-bold">Carrito</span>
+                        <span id="cartBadgeCount" class="bg-white text-ccb-900 text-xs font-black px-2 py-0.5 rounded-full min-w-[20px] text-center">0</span>
+                    </button>
+
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
+
+        <!-- ==================== VIEW 1: STORE / CATALOG ==================== -->
+        <div id="storeView" class="space-y-6">
+
+            <!-- Hero & Delivery Identification Card -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                
+                <!-- Left Maroon Banner with CCB Branding -->
+                <div class="lg:col-span-1 gradient-banner rounded-2xl p-6 text-white shadow-xl flex flex-col justify-between relative overflow-hidden border border-ccb-900">
+                    <div class="absolute -right-8 -bottom-8 opacity-10 text-9xl text-white pointer-events-none">
+                        <i class="fa-solid fa-mug-hot"></i>
+                    </div>
+                    <div class="space-y-3 relative z-10">
+                        <div class="inline-flex items-center space-x-2 bg-white/10 backdrop-blur-md px-3 py-1 rounded-full text-xs font-medium text-ccb-200 border border-white/10">
+                            <i class="fa-solid fa-graduation-cap"></i>
+                            <span>Servicio Oficial CCB</span>
+                        </div>
+                        <h2 class="text-2xl font-extrabold tracking-tight">Cafetería & Papelería Colegial CCB</h2>
+                        <p class="text-xs text-ccb-100 leading-relaxed">
+                            Realiza tus pedidos directos a tu salón de clase. El profesor registra la comanda y el alumno encargado recoge en cafetería.
+                        </p>
+                    </div>
+                    
+                    <div class="mt-6 pt-4 border-t border-white/20 flex items-center justify-between text-xs text-ccb-100 relative z-10">
+                        <span class="flex items-center"><i class="fa-solid fa-clock text-amber-300 mr-1.5"></i> Horario: 7:00 AM - 4:00 PM</span>
+                        <span class="flex items-center"><i class="fa-solid fa-circle-check text-emerald-400 mr-1.5"></i> Despacho Activo</span>
+                    </div>
+                </div>
+
+                <!-- Right Identification Form (Profesor, Salón 101-310, Estudiante) -->
+                <div class="lg:col-span-2 bg-white rounded-2xl p-6 shadow-sm border border-slate-200/80 space-y-4">
+                    <div class="flex items-center space-x-3 pb-3 border-b border-slate-100">
+                        <div class="w-8 h-8 rounded-lg bg-ccb-50 flex items-center justify-center text-ccb-800">
+                            <i class="fa-solid fa-id-card text-base"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-base font-bold text-slate-900">1. Datos del Pedido y Entrega en Aula</h3>
+                            <p class="text-xs text-slate-500">Ingresa la información para identificar tu salón de clase.</p>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        
+                        <!-- Profesor -->
+                        <div class="space-y-1">
+                            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider">Profesor / Docente <span class="text-ccb-700">*</span></label>
+                            <div class="relative">
+                                <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
+                                    <i class="fa-solid fa-chalkboard-user text-sm"></i>
+                                </span>
+                                <input type="text" id="profesorName" placeholder="Ej: Prof. Gómez" 
+                                    class="w-full pl-9 pr-3 py-2 text-sm bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-ccb-800 focus:border-ccb-800 outline-none transition">
+                            </div>
+                        </div>
+
+                        <!-- Salón / Aula Organizado por Pisos (101 a 310) -->
+                        <div class="space-y-1">
+                            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider">Salón / Aula CCB <span class="text-ccb-700">*</span></label>
+                            <div class="relative">
+                                <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
+                                    <i class="fa-solid fa-door-open text-sm"></i>
+                                </span>
+                                <select id="classroomSelect" class="w-full pl-9 pr-3 py-2 text-sm bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-ccb-800 focus:border-ccb-800 outline-none transition appearance-none">
+                                    <option value="">Selecciona Salón</option>
+                                    <optgroup label="🏢 PISO 1 (Salones 101 - 110)">
+                                        <option value="Salón 101 (Piso 1)">Salón 101</option>
+                                        <option value="Salón 102 (Piso 1)">Salón 102</option>
+                                        <option value="Salón 103 (Piso 1)">Salón 103</option>
+                                        <option value="Salón 104 (Piso 1)">Salón 104</option>
+                                        <option value="Salón 105 (Piso 1)">Salón 105</option>
+                                        <option value="Salón 106 (Piso 1)">Salón 106</option>
+                                        <option value="Salón 107 (Piso 1)">Salón 107</option>
+                                        <option value="Salón 108 (Piso 1)">Salón 108</option>
+                                        <option value="Salón 109 (Piso 1)">Salón 109</option>
+                                        <option value="Salón 110 (Piso 1)">Salón 110</option>
+                                    </optgroup>
+                                    <optgroup label="🏢 PISO 2 (Salones 201 - 210)">
+                                        <option value="Salón 201 (Piso 2)">Salón 201</option>
+                                        <option value="Salón 202 (Piso 2)">Salón 202</option>
+                                        <option value="Salón 203 (Piso 2)">Salón 203</option>
+                                        <option value="Salón 204 (Piso 2)">Salón 204</option>
+                                        <option value="Salón 205 (Piso 2)">Salón 205</option>
+                                        <option value="Salón 206 (Piso 2)">Salón 206</option>
+                                        <option value="Salón 207 (Piso 2)">Salón 207</option>
+                                        <option value="Salón 208 (Piso 2)">Salón 208</option>
+                                        <option value="Salón 209 (Piso 2)">Salón 209</option>
+                                        <option value="Salón 210 (Piso 2)">Salón 210</option>
+                                    </optgroup>
+                                    <optgroup label="🏢 PISO 3 (Salones 301 - 310)">
+                                        <option value="Salón 301 (Piso 3)">Salón 301</option>
+                                        <option value="Salón 302 (Piso 3)">Salón 302</option>
+                                        <option value="Salón 303 (Piso 3)">Salón 303</option>
+                                        <option value="Salón 304 (Piso 3)">Salón 304</option>
+                                        <option value="Salón 305 (Piso 3)">Salón 305</option>
+                                        <option value="Salón 306 (Piso 3)">Salón 306</option>
+                                        <option value="Salón 307 (Piso 3)">Salón 307</option>
+                                        <option value="Salón 308 (Piso 3)">Salón 308</option>
+                                        <option value="Salón 309 (Piso 3)">Salón 309</option>
+                                        <option value="Salón 310 (Piso 3)">Salón 310</option>
+                                    </optgroup>
+                                </select>
+                                <span class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-slate-400">
+                                    <i class="fa-solid fa-chevron-down text-xs"></i>
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- Estudiante que Recoge -->
+                        <div class="space-y-1">
+                            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider">Estudiante Encargado <span class="text-ccb-700">*</span></label>
+                            <div class="relative">
+                                <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
+                                    <i class="fa-solid fa-user-graduate text-sm"></i>
+                                </span>
+                                <input type="text" id="studentName" placeholder="Ej: Mateo Rodríguez" 
+                                    class="w-full pl-9 pr-3 py-2 text-sm bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-ccb-800 focus:border-ccb-800 outline-none transition">
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Search & Filters Toolbar -->
+            <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-200/80 space-y-3">
+                <div class="flex flex-col md:flex-row gap-3 items-center justify-between">
+                    
+                    <!-- Search Input -->
+                    <div class="relative w-full md:w-80">
+                        <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                            <i class="fa-solid fa-magnifying-glass text-sm"></i>
+                        </span>
+                        <input type="text" id="searchInput" oninput="filterProducts()" placeholder="Buscar empanadas, cuadernos, lápices..." 
+                            class="w-full pl-10 pr-8 py-2 text-sm bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-ccb-800 outline-none transition">
+                        <button id="clearSearchBtn" onclick="clearSearch()" class="hidden absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-slate-600">
+                            <i class="fa-solid fa-xmark text-sm"></i>
+                        </button>
+                    </div>
+
+                    <!-- Main Section Toggle Tabs -->
+                    <div class="flex items-center bg-slate-100 p-1 rounded-xl w-full md:w-auto overflow-x-auto">
+                        <button onclick="setMainCategory('all')" id="catTab-all" class="cat-tab px-4 py-1.5 text-xs font-bold rounded-lg transition whitespace-nowrap bg-white text-slate-800 shadow-sm">
+                            <i class="fa-solid fa-border-all mr-1.5"></i> Todos (18)
+                        </button>
+                        <button onclick="setMainCategory('comida')" id="catTab-comida" class="cat-tab px-4 py-1.5 text-xs font-bold rounded-lg transition text-slate-600 hover:text-slate-900 whitespace-nowrap">
+                            <i class="fa-solid fa-utensils text-amber-600 mr-1.5"></i> Cafetería CCB
+                        </button>
+                        <button onclick="setMainCategory('utiles')" id="catTab-utiles" class="cat-tab px-4 py-1.5 text-xs font-bold rounded-lg transition text-slate-600 hover:text-slate-900 whitespace-nowrap">
+                            <i class="fa-solid fa-pen-ruler text-stationery-600 mr-1.5"></i> Útiles Escolares
+                        </button>
+                    </div>
+
+                </div>
+
+                <!-- Sub-category Chips -->
+                <div id="subCategoryChips" class="flex items-center space-x-2 overflow-x-auto pt-2 border-t border-slate-100 pb-1 text-xs">
+                    <!-- Populated via JS -->
+                </div>
+            </div>
+
+            <!-- Products Catalog Grid & Special Requests Split -->
+            <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
+                
+                <!-- Catalog Grid (3 Columns on Large) -->
+                <div class="lg:col-span-3 space-y-4">
+                    <div class="flex items-center justify-between">
+                        <h3 class="text-lg font-bold text-slate-900 flex items-center">
+                            <span>Catálogo Colegial CCB</span>
+                            <span id="productCountBadge" class="ml-2 text-xs font-semibold bg-ccb-100 text-ccb-900 px-2.5 py-0.5 rounded-full">0 artículos</span>
+                        </h3>
+                        <span class="text-xs text-slate-500">Precios en Pesos Colombianos ($)</span>
+                    </div>
+
+                    <!-- Products Container -->
+                    <div id="productsGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                        <!-- Product Cards injected dynamically via JS -->
+                    </div>
+
+                    <!-- Empty State -->
+                    <div id="noProductsState" class="hidden bg-white rounded-2xl p-12 text-center border border-slate-200 space-y-3">
+                        <div class="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mx-auto text-slate-400 text-2xl">
+                            <i class="fa-solid fa-box-open"></i>
+                        </div>
+                        <h4 class="text-base font-bold text-slate-800">No se encontraron productos</h4>
+                        <p class="text-xs text-slate-500 max-w-sm mx-auto">Prueba con otra palabra de búsqueda o borra los filtros aplicados.</p>
+                        <button onclick="resetFilters()" class="px-4 py-2 bg-ccb-800 text-white rounded-xl text-xs font-semibold hover:bg-ccb-900 transition">
+                            Restablecer Filtros
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Right Sidebar: Special Request Notes & Live Cart Summary Badge -->
+                <div class="lg:col-span-1 space-y-6">
+                    
+                    <!-- Special Requests Box -->
+                    <div class="bg-gradient-to-br from-ccb-50 to-orange-50/50 rounded-2xl p-5 border border-ccb-200/80 shadow-sm space-y-3">
+                        <div class="flex items-center space-x-2 text-ccb-900 font-bold text-sm">
+                            <i class="fa-solid fa-note-sticky text-ccb-800 text-base"></i>
+                            <span>Pedidos Especiales / Notas</span>
+                        </div>
+                        <p class="text-xs text-slate-600 leading-relaxed">
+                            ¿Necesitas algo específico? (Ej: "Jugo sin azúcar", "Fotocopias de examen", "Lápiz 2B adicional").
+                        </p>
+                        <textarea id="specialNotesInput" rows="4" 
+                            placeholder="Escribe tus notas especiales para la cafetería o papelería..." 
+                            class="w-full p-3 text-xs bg-white border border-ccb-200 rounded-xl focus:ring-2 focus:ring-ccb-800 outline-none transition resize-none"></textarea>
+                        <div class="text-[11px] text-ccb-800 flex items-center justify-between">
+                            <span><i class="fa-solid fa-circle-info mr-1"></i> Se incluirá en la comanda CCB</span>
+                            <span class="font-semibold text-ccb-900">Opcional</span>
+                        </div>
+                    </div>
+
+                    <!-- Cart Preview Mini Widget -->
+                    <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm space-y-4">
+                        <div class="flex items-center justify-between">
+                            <h4 class="font-bold text-sm text-slate-900 flex items-center">
+                                <i class="fa-solid fa-cart-shopping text-ccb-800 mr-2"></i> Resumen
+                            </h4>
+                            <span id="miniCartCount" class="text-xs font-bold text-slate-500">0 ítems</span>
+                        </div>
+
+                        <div id="miniCartItems" class="space-y-2 max-h-48 overflow-y-auto text-xs text-slate-600">
+                            <!-- Mini items list -->
+                            <p class="text-slate-400 italic text-center py-4">Tu carrito está vacío</p>
+                        </div>
+
+                        <div class="pt-3 border-t border-slate-100 space-y-2">
+                            <div class="flex justify-between items-center font-extrabold text-base text-slate-900">
+                                <span>Total Est.:</span>
+                                <span id="miniCartTotal" class="text-ccb-800">$0</span>
+                            </div>
+                            <button onclick="toggleCartDrawer(true)" class="w-full py-2.5 bg-ccb-800 hover:bg-ccb-900 text-white font-bold rounded-xl text-xs transition shadow-md shadow-ccb-800/20 flex items-center justify-center space-x-2">
+                                <span>Ver y Confirmar Pedido</span>
+                                <i class="fa-solid fa-arrow-right text-xs"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- ==================== VIEW 2: ADMIN PANEL ==================== -->
+        <div id="adminView" class="hidden space-y-6">
+            
+            <div class="flex flex-col md:flex-row md:items-center justify-between bg-white p-6 rounded-2xl border border-slate-200 shadow-sm gap-4">
+                <div>
+                    <div class="inline-flex items-center space-x-2 bg-ccb-100 text-ccb-900 text-xs px-2.5 py-1 rounded-full font-bold mb-2">
+                        <i class="fa-solid fa-shield-halved"></i>
+                        <span>Panel Despacho Cafetería CCB</span>
+                    </div>
+                    <h2 class="text-xl font-extrabold text-slate-900">Gestión de Pedidos y Entrega</h2>
+                    <p class="text-xs text-slate-500">Administra las comandas de las aulas en tiempo real.</p>
+                </div>
+
+                <div class="flex items-center space-x-3">
+                    <button onclick="switchTab('store')" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-xl text-xs transition flex items-center space-x-2">
+                        <i class="fa-solid fa-arrow-left"></i>
+                        <span>Volver a la Tienda</span>
+                    </button>
+                    <button onclick="clearAllOrdersConfirm()" class="px-3 py-2 bg-red-50 hover:bg-red-100 text-red-600 border border-red-200 font-bold rounded-xl text-xs transition flex items-center space-x-1.5">
+                        <i class="fa-solid fa-trash-can"></i>
+                        <span>Limpiar Historial</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Admin Stats Bar -->
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm space-y-1">
+                    <span class="text-xs text-slate-500 font-medium">Total Pedidos</span>
+                    <p id="statTotalOrders" class="text-2xl font-black text-slate-900">0</p>
+                </div>
+                <div class="bg-amber-50 p-4 rounded-xl border border-amber-200 shadow-sm space-y-1">
+                    <span class="text-xs text-amber-700 font-medium">En Preparación</span>
+                    <p id="statPreparingOrders" class="text-2xl font-black text-amber-700">0</p>
+                </div>
+                <div class="bg-emerald-50 p-4 rounded-xl border border-emerald-200 shadow-sm space-y-1">
+                    <span class="text-xs text-emerald-700 font-medium">Listos para Recoger</span>
+                    <p id="statReadyOrders" class="text-2xl font-black text-emerald-700">0</p>
+                </div>
+                <div class="bg-ccb-50 p-4 rounded-xl border border-ccb-200 shadow-sm space-y-1">
+                    <span class="text-xs text-ccb-800 font-medium">Ventas del Día</span>
+                    <p id="statTotalSales" class="text-2xl font-black text-ccb-900">$0</p>
+                </div>
+            </div>
+
+            <!-- Orders Table Container -->
+            <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+                <div class="p-4 border-b border-slate-100 flex items-center justify-between">
+                    <h3 class="font-bold text-slate-800 text-sm">Comandas CCB Recibidas</h3>
+                    <div class="flex items-center space-x-2">
+                        <span class="w-2.5 h-2.5 bg-emerald-500 rounded-full animate-ping"></span>
+                        <span class="text-xs text-slate-500 font-semibold">Sincronizado en directo</span>
+                    </div>
+                </div>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-slate-50 text-[11px] uppercase tracking-wider text-slate-500 font-bold border-b border-slate-200">
+                                <th class="py-3 px-4">N° Orden</th>
+                                <th class="py-3 px-4">Salón / Aula</th>
+                                <th class="py-3 px-4">Profesor / Estudiante</th>
+                                <th class="py-3 px-4">Detalle del Pedido</th>
+                                <th class="py-3 px-4">Total</th>
+                                <th class="py-3 px-4">Estado Actual</th>
+                                <th class="py-3 px-4 text-right">Acciones de Despacho</th>
+                            </tr>
+                        </thead>
+                        <tbody id="adminOrdersTbody" class="divide-y divide-slate-100 text-xs text-slate-700">
+                            <!-- Populated dynamically via JS -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <div id="adminEmptyState" class="p-12 text-center text-slate-400 space-y-2">
+                    <i class="fa-solid fa-receipt text-3xl"></i>
+                    <p class="font-semibold text-slate-600">No hay pedidos registrados en este momento</p>
+                    <p class="text-xs text-slate-400">Los pedidos realizados desde la tienda aparecerán aquí automáticamente.</p>
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- ==================== SHOPPING CART DRAWER ==================== -->
+    <div id="cartDrawerBackdrop" onclick="toggleCartDrawer(false)" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-40 hidden transition-opacity"></div>
+    
+    <div id="cartDrawer" class="fixed inset-y-0 right-0 max-w-full w-full sm:w-96 bg-white z-50 shadow-2xl flex flex-col transform translate-x-full transition-transform duration-300 ease-in-out">
+        
+        <!-- Cart Header -->
+        <div class="p-5 border-b border-slate-200 flex items-center justify-between bg-slate-50">
+            <div class="flex items-center space-x-2">
+                <div class="w-8 h-8 bg-ccb-800 text-white rounded-lg flex items-center justify-center font-bold">
+                    <i class="fa-solid fa-basket-shopping text-sm"></i>
+                </div>
+                <div>
+                    <h3 class="font-bold text-slate-900 text-base">Carrito CCB</h3>
+                    <p class="text-xs text-slate-500">Revisa tus artículos antes de enviar</p>
+                </div>
+            </div>
+            <button onclick="toggleCartDrawer(false)" class="p-2 text-slate-400 hover:text-slate-600 rounded-lg hover:bg-slate-200/60 transition">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+        </div>
+
+        <!-- Cart Items List -->
+        <div id="cartItemsList" class="flex-1 overflow-y-auto p-5 space-y-4">
+            <!-- Items injected via JS -->
+        </div>
+
+        <!-- Cart Footer -->
+        <div class="p-5 border-t border-slate-200 bg-slate-50 space-y-4">
+            
+            <div class="space-y-2 text-xs">
+                <div class="flex justify-between text-slate-500">
+                    <span>Subtotal de Productos</span>
+                    <span id="cartSubtotal">$0</span>
+                </div>
+                <div class="flex justify-between text-slate-500">
+                    <span>Costo de Envío a Aula</span>
+                    <span class="text-emerald-600 font-bold">¡GRATIS!</span>
+                </div>
+                <div class="flex justify-between text-base font-extrabold text-slate-900 pt-2 border-t border-slate-200">
+                    <span>Total a Pagar</span>
+                    <span id="cartTotal" class="text-ccb-800 text-lg">$0</span>
+                </div>
+            </div>
+
+            <button onclick="processOrder()" class="w-full py-3 bg-ccb-800 hover:bg-ccb-900 active:scale-[0.99] text-white font-bold rounded-xl text-sm transition shadow-lg shadow-ccb-800/30 flex items-center justify-center space-x-2">
+                <i class="fa-solid fa-paper-plane text-xs"></i>
+                <span>Enviar Pedido a Despacho CCB</span>
+            </button>
+
+            <button onclick="clearCart()" class="w-full py-2 text-xs font-semibold text-slate-500 hover:text-red-600 transition text-center">
+                <i class="fa-solid fa-trash-can mr-1"></i> Vaciar Carrito
+            </button>
+
+        </div>
+
+    </div>
+
+    <!-- ==================== ORDER TICKET & TRACKER MODAL ==================== -->
+    <div id="ticketModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4 overflow-y-auto">
+        
+        <div class="bg-white rounded-3xl max-w-md w-full shadow-2xl border border-slate-100 overflow-hidden transform transition-all my-8">
+            
+            <!-- Modal Top Bar -->
+            <div class="bg-ccb-950 text-white p-5 flex items-center justify-between">
+                <div class="flex items-center space-x-2">
+                    <div class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></div>
+                    <span class="font-bold text-sm">Comprobante Cafetería CCB</span>
+                </div>
+                <button onclick="closeTicketModal()" class="text-slate-400 hover:text-white transition">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+
+            <!-- Order Ticket Content -->
+            <div id="printableTicket" class="p-6 space-y-6">
+                
+                <!-- Ticket Header with CCB Logo -->
+                <div class="text-center space-y-2 pb-4 border-b border-dashed border-slate-200">
+                    <!-- CCB Monogram SVG Logo in Ticket -->
+                    <div class="flex justify-center">
+                        <svg viewBox="0 0 300 240" fill="none" xmlns="http://www.w3.org/2000/svg" class="h-16 w-auto">
+                            <path d="M95 55 C55 55 25 85 25 125 C25 165 55 195 95 195 C120 195 142 182 154 162 L132 148 C124 162 110 170 95 170 C70 170 50 150 50 125 C50 100 70 80 95 80 C110 80 124 88 132 102 L154 88 C142 68 120 55 95 55 Z" fill="#7A1C2E"/>
+                            <path d="M130 85 C100 85 75 105 75 135 C75 165 100 185 130 185 C150 185 168 174 178 157 L160 145 C153 156 142 163 130 163 C112 163 97 150 97 135 C97 120 112 107 130 107 C142 107 153 114 160 125 L178 113 C168 96 150 85 130 85 Z" fill="#7A1C2E"/>
+                            <path d="M160 60 H205 C228 60 245 74 245 93 C245 106 237 116 225 122 C240 128 250 141 250 158 C250 179 230 195 205 195 H160 V60 Z M185 82 V113 H202 C212 113 220 106 220 97 C220 88 212 82 202 82 H185 Z M185 135 V173 H205 C216 173 225 165 225 154 C225 143 216 135 205 135 H185 Z" fill="#7A1C2E"/>
+                            <ellipse cx="205" cy="154" rx="7" ry="10" fill="#7A1C2E" transform="rotate(-15 205 154)"/>
+                            <path d="M205 145 C202 149 208 159 205 163" stroke="#FFFFFF" stroke-width="1.8" stroke-linecap="round"/>
+                            <text x="150" y="225" font-family="'Plus Jakarta Sans', sans-serif" font-size="22" font-weight="800" fill="#7A1C2E" text-anchor="middle" letter-spacing="6">CAFETERÍA</text>
+                        </svg>
+                    </div>
+
+                    <h3 class="text-xl font-extrabold text-slate-900">¡Comanda Confirmada!</h3>
+                    <p class="text-xs text-slate-500">Orden N° <span id="ticketOrderNumber" class="font-mono font-bold text-slate-800">#ORD-0000</span></p>
+                    <p id="ticketTimestamp" class="text-[11px] text-slate-400">Fecha: --/--/---- --:--</p>
+                </div>
+
+                <!-- Status Progress Bar -->
+                <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200/80 space-y-3">
+                    <div class="flex justify-between items-center">
+                        <span class="text-xs font-bold text-slate-700">Estado del Pedido:</span>
+                        <span id="ticketStatusBadge" class="text-xs font-extrabold px-2.5 py-1 rounded-full bg-amber-100 text-amber-800">
+                            Recibido
+                        </span>
+                    </div>
+
+                    <!-- Progress Graphic -->
+                    <div class="relative pt-2">
+                        <div class="overflow-hidden h-2 text-xs flex rounded bg-slate-200">
+                            <div id="statusProgressBar" class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-ccb-800 w-1/3 transition-all duration-500"></div>
+                        </div>
+                        <div class="flex justify-between text-[10px] text-slate-500 font-medium mt-2">
+                            <span>1. Recibido</span>
+                            <span>2. En Preparación</span>
+                            <span>3. Listo Recoger</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Classroom & Pickup Details -->
+                <div class="grid grid-cols-2 gap-3 text-xs bg-slate-50 p-3.5 rounded-xl border border-slate-200/60">
+                    <div>
+                        <span class="text-slate-400 block text-[10px] uppercase font-bold">Salón / Aula CCB</span>
+                        <span id="ticketClassroom" class="font-bold text-slate-800">--</span>
+                    </div>
+                    <div>
+                        <span class="text-slate-400 block text-[10px] uppercase font-bold">Profesor</span>
+                        <span id="ticketProfesor" class="font-bold text-slate-800">--</span>
+                    </div>
+                    <div class="col-span-2 pt-2 border-t border-slate-200/60">
+                        <span class="text-slate-400 block text-[10px] uppercase font-bold">Estudiante que Recoge</span>
+                        <span id="ticketStudent" class="font-bold text-ccb-800">--</span>
+                    </div>
+                </div>
+
+                <!-- Itemized Breakdown -->
+                <div class="space-y-2">
+                    <span class="text-xs font-bold text-slate-800 block">Detalle de Productos:</span>
+                    <div id="ticketItemList" class="space-y-1.5 text-xs text-slate-600 max-h-36 overflow-y-auto pr-1">
+                        <!-- Dynamic items -->
+                    </div>
+                </div>
+
+                <!-- Special Notes Display -->
+                <div id="ticketNotesContainer" class="hidden text-xs bg-ccb-50 p-3 rounded-xl border border-ccb-200 text-ccb-950 space-y-1">
+                    <span class="font-bold block text-[10px] uppercase tracking-wider text-ccb-800">Notas Especiales:</span>
+                    <p id="ticketNotesText" class="italic leading-relaxed"></p>
+                </div>
+
+                <!-- Total -->
+                <div class="pt-3 border-t border-slate-200 flex justify-between items-center font-extrabold text-base text-slate-900">
+                    <span>Total a Pagar:</span>
+                    <span id="ticketTotal" class="text-ccb-800 text-lg">$0</span>
+                </div>
+
+            </div>
+
+            <!-- Modal Footer Actions -->
+            <div class="bg-slate-50 p-4 border-t border-slate-200 flex items-center justify-between space-x-3">
+                <button onclick="window.print()" class="px-4 py-2 bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold rounded-xl text-xs transition flex items-center space-x-1.5">
+                    <i class="fa-solid fa-print"></i>
+                    <span>Imprimir Ticket</span>
+                </button>
+                <button onclick="closeTicketModal()" class="px-5 py-2 bg-ccb-800 hover:bg-ccb-900 text-white font-bold rounded-xl text-xs transition">
+                    Entendido / Aceptar
+                </button>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- ==================== GITHUB PAGES INSTRUCTIONS MODAL ==================== -->
+    <div id="githubModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-xl w-full shadow-2xl border border-slate-100 overflow-hidden">
+            <div class="p-5 bg-ccb-950 text-white flex items-center justify-between">
+                <div class="flex items-center space-x-2">
+                    <i class="fa-brands fa-github text-xl text-ccb-200"></i>
+                    <h3 class="font-bold text-base">Cómo publicar en GitHub Pages (Gratis)</h3>
+                </div>
+                <button onclick="closeGithubModal()" class="text-slate-400 hover:text-white transition">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+
+            <div class="p-6 space-y-4 text-xs text-slate-700 leading-relaxed max-h-[80vh] overflow-y-auto">
+                <p class="text-slate-600">Pasos para publicar la web de la <strong>Cafetería Colegial CCB</strong> en GitHub Pages:</p>
+
+                <ol class="space-y-3 list-decimal list-inside font-medium text-slate-800">
+                    <li class="bg-slate-50 p-3 rounded-xl border border-slate-200">
+                        <strong class="text-slate-900">Guardar este archivo:</strong> Guarda este código con el nombre <code class="bg-slate-200 px-1.5 py-0.5 rounded text-ccb-800 font-mono">index.html</code> en tu computadora.
+                    </li>
+                    <li class="bg-slate-50 p-3 rounded-xl border border-slate-200">
+                        <strong class="text-slate-900">Crear Repositorio en GitHub:</strong> Entra a <a href="https://github.com" target="_blank" class="text-ccb-800 underline">GitHub.com</a>, crea un repositorio con el nombre <code class="bg-slate-200 px-1.5 py-0.5 rounded text-slate-800 font-mono">cafeteria-colegial-ccb</code> y marca la opción "Public".
+                    </li>
+                    <li class="bg-slate-50 p-3 rounded-xl border border-slate-200">
+                        <strong class="text-slate-900">Subir el archivo:</strong> Haz clic en <em>"uploading an existing file"</em>, arrastra <code class="bg-slate-200 px-1.5 py-0.5 rounded text-ccb-800 font-mono">index.html</code> y presiona "Commit changes".
+                    </li>
+                    <li class="bg-slate-50 p-3 rounded-xl border border-slate-200">
+                        <strong class="text-slate-900">Activar GitHub Pages:</strong> Ve a <strong class="text-slate-900">Settings</strong> &rarr; <strong class="text-slate-900">Pages</strong> &rarr; Selecciona la rama <code class="bg-slate-200 px-1.5 py-0.5 rounded font-mono">main</code> o <code class="bg-slate-200 px-1.5 py-0.5 rounded font-mono">master</code> y guarda.
+                    </li>
+                    <li class="bg-slate-50 p-3 rounded-xl border border-slate-200">
+                        <strong class="text-slate-900">¡Sitio web publicado!</strong> Tu página estará activa en: <code class="bg-ccb-100 text-ccb-900 px-2 py-0.5 rounded font-bold font-mono">https://tu-usuario.github.io/cafeteria-colegial-ccb</code>
+                    </li>
+                </ol>
+            </div>
+
+            <div class="p-4 bg-slate-50 border-t border-slate-200 text-right">
+                <button onclick="closeGithubModal()" class="px-5 py-2 bg-ccb-950 text-white font-bold text-xs rounded-xl hover:bg-slate-800 transition">
+                    Entendido
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification Overlay -->
+    <div id="toastContainer" class="fixed bottom-5 right-5 z-50 flex flex-col space-y-2 pointer-events-none"></div>
+
+    <!-- ==================== JAVASCRIPT APPLICATION LOGIC ==================== -->
+    <script>
+        // Products Catalog (Cafetería + Papelería Escolar CCB)
+        const PRODUCTS = [
+            // --- CAFETERÍA / COMIDA Y BEBIDAS ---
+            {
+                id: 101,
+                name: 'Empanada Criolla CCB',
+                category: 'comida',
+                subCategory: 'Snacks & Salados',
+                price: 3000,
+                icon: 'fa-drumstick-bite',
+                color: 'bg-ccb-800',
+                popular: true,
+                description: 'Crujiente de carne y papa con ají suave casero.'
+            },
+            {
+                id: 102,
+                name: 'Sándwich Especial Jamón y Queso',
+                category: 'comida',
+                subCategory: 'Snacks & Salados',
+                price: 5500,
+                icon: 'fa-bread-slice',
+                color: 'bg-amber-600',
+                popular: true,
+                description: 'Pan artesanal tostado con doble queso y jamón.'
+            },
+            {
+                id: 103,
+                name: 'Jugo Natural en Agua 400ml',
+                category: 'comida',
+                subCategory: 'Bebidas',
+                price: 3500,
+                icon: 'fa-glass-water',
+                color: 'bg-orange-500',
+                popular: false,
+                description: 'Sabores: Lulo, Mango, Maracuyá o Mora.'
+            },
+            {
+                id: 104,
+                name: 'Café Cappuccino Especial CCB',
+                category: 'comida',
+                subCategory: 'Bebidas',
+                price: 4000,
+                icon: 'fa-mug-hot',
+                color: 'bg-ccb-900',
+                popular: true,
+                description: 'Preparado al instante con granos premium de selección.'
+            },
+            {
+                id: 105,
+                name: 'Ensalada de Frutas con Queso',
+                category: 'comida',
+                subCategory: 'Saludables',
+                price: 4500,
+                icon: 'fa-apple-whole',
+                color: 'bg-red-500',
+                popular: true,
+                description: 'Papaya, banano, manzana, fresas, crema y queso.'
+            },
+            {
+                id: 106,
+                name: 'Combo Recreo CCB',
+                category: 'comida',
+                subCategory: 'Combos Especiales',
+                price: 6500,
+                icon: 'fa-utensils',
+                color: 'bg-emerald-600',
+                popular: true,
+                description: '1 Empanada + 1 Jugo Natural + 1 Galleta de la casa.'
+            },
+            {
+                id: 107,
+                name: 'Agua Mineral 500ml',
+                category: 'comida',
+                subCategory: 'Bebidas',
+                price: 2000,
+                icon: 'fa-bottle-water',
+                color: 'bg-blue-400',
+                popular: false,
+                description: 'Bebida hidratante sin gas.'
+            },
+            {
+                id: 108,
+                name: 'Panini Pollo BBQ',
+                category: 'comida',
+                subCategory: 'Snacks & Salados',
+                price: 7000,
+                icon: 'fa-burger',
+                color: 'bg-amber-700',
+                popular: false,
+                description: 'Pollo desmechado con salsa BBQ y queso fundido.'
+            },
+
+            // --- PAPELERÍA / ÚTILES ESCOLARES ---
+            {
+                id: 201,
+                name: 'Cuaderno Cosido 100 Hojas',
+                category: 'utiles',
+                subCategory: 'Cuadernos & Papel',
+                price: 6500,
+                icon: 'fa-book-open',
+                color: 'bg-stationery-600',
+                popular: true,
+                description: 'Cuadro grande o rayado con pasta dura resistente.'
+            },
+            {
+                id: 202,
+                name: 'Lápiz Grafito No. 2 HB',
+                category: 'utiles',
+                subCategory: 'Escritura',
+                price: 1500,
+                icon: 'fa-pencil',
+                color: 'bg-yellow-500',
+                popular: true,
+                description: 'Trazos suaves y borrado fácil. Estándar escolar.'
+            },
+            {
+                id: 203,
+                name: 'Bolígrafo Gel (Negro/Azul)',
+                category: 'utiles',
+                subCategory: 'Escritura',
+                price: 2000,
+                icon: 'fa-pen',
+                color: 'bg-blue-600',
+                popular: true,
+                description: 'Tinta de secado rápido punto fino 0.7mm.'
+            },
+            {
+                id: 204,
+                name: 'Borrador de Nata Grande',
+                category: 'utiles',
+                subCategory: 'Escritura',
+                price: 1200,
+                icon: 'fa-eraser',
+                color: 'bg-slate-400',
+                popular: false,
+                description: 'No rompe las hojas ni deja manchas.'
+            },
+            {
+                id: 205,
+                name: 'Sacapuntas con Depósito',
+                category: 'utiles',
+                subCategory: 'Escritura',
+                price: 2500,
+                icon: 'fa-compact-disc',
+                color: 'bg-indigo-500',
+                popular: false,
+                description: 'Doble cuchilla de acero para lápices y colores.'
+            },
+            {
+                id: 206,
+                name: 'Juego de Geometría Completo',
+                category: 'utiles',
+                subCategory: 'Geometría & Reglas',
+                price: 7500,
+                icon: 'fa-ruler-combined',
+                color: 'bg-teal-600',
+                popular: true,
+                description: 'Incluye regla 30cm, 2 escuadras y transportador.'
+            },
+            {
+                id: 207,
+                name: 'Caja de Colores x 12 Unidades',
+                category: 'utiles',
+                subCategory: 'Arte & Manualidades',
+                price: 12000,
+                icon: 'fa-palette',
+                color: 'bg-purple-600',
+                popular: true,
+                description: 'Mina resistente de 4mm con pigmentos vivos.'
+            },
+            {
+                id: 208,
+                name: 'Pegamento en Barra 21g',
+                category: 'utiles',
+                subCategory: 'Arte & Manualidades',
+                price: 3200,
+                icon: 'fa-paste',
+                color: 'bg-emerald-500',
+                popular: false,
+                description: 'Fórmula lavable no tóxica para papel y cartón.'
+            },
+            {
+                id: 209,
+                name: 'Tijera Escolar Punta Roma',
+                category: 'utiles',
+                subCategory: 'Arte & Manualidades',
+                price: 4000,
+                icon: 'fa-scissors',
+                color: 'bg-pink-500',
+                popular: false,
+                description: 'Segura para niños, hojas de acero inoxidable.'
+            },
+            {
+                id: 210,
+                name: 'Paquete Hojas de Examen x 10',
+                category: 'utiles',
+                subCategory: 'Cuadernos & Papel',
+                price: 1500,
+                icon: 'fa-file-lines',
+                color: 'bg-slate-500',
+                popular: true,
+                description: 'Hojas rayadas en tamaño carta para evaluaciones.'
+            }
+        ];
+
+        // State Management
+        let cart = [];
+        let currentMainCat = 'all';
+        let currentSubCat = 'all';
+        let currentSearchQuery = '';
+        let activeOrder = null;
+        let ordersList = [];
+
+        function initApp() {
+            const savedOrders = localStorage.getItem('ccb_orders_db');
+            if (savedOrders) {
+                try {
+                    ordersList = JSON.parse(savedOrders);
+                } catch(e) {
+                    ordersList = [];
+                }
+            }
+
+            window.addEventListener('storage', (e) => {
+                if (e.key === 'ccb_orders_db') {
+                    ordersList = JSON.parse(e.newValue || '[]');
+                    renderAdminOrders();
+                    updateAdminBadge();
+                    if (activeOrder) {
+                        const updated = ordersList.find(o => o.id === activeOrder.id);
+                        if (updated) {
+                            activeOrder = updated;
+                            updateTicketModalUI(activeOrder);
+                        }
+                    }
+                }
+            });
+
+            renderProducts();
+            renderSubCategoryChips();
+            renderCartUI();
+            renderAdminOrders();
+            updateAdminBadge();
+        }
+
+        function setMainCategory(cat) {
+            currentMainCat = cat;
+            currentSubCat = 'all';
+
+            document.querySelectorAll('.cat-tab').forEach(btn => {
+                btn.classList.remove('bg-white', 'text-slate-800', 'shadow-sm');
+                btn.classList.add('text-slate-600');
+            });
+            const activeBtn = document.getElementById(`catTab-${cat}`);
+            if (activeBtn) {
+                activeBtn.classList.add('bg-white', 'text-slate-800', 'shadow-sm');
+                activeBtn.classList.remove('text-slate-600');
+            }
+
+            renderSubCategoryChips();
+            renderProducts();
+        }
+
+        function renderSubCategoryChips() {
+            const chipContainer = document.getElementById('subCategoryChips');
+            let subCats = ['all'];
+
+            let filtered = PRODUCTS;
+            if (currentMainCat !== 'all') {
+                filtered = PRODUCTS.filter(p => p.category === currentMainCat);
+            }
+
+            const uniqueSubCats = [...new Set(filtered.map(p => p.subCategory))];
+            subCats = ['all', ...uniqueSubCats];
+
+            chipContainer.innerHTML = subCats.map(sub => {
+                const isActive = currentSubCat === sub;
+                const label = sub === 'all' ? 'Ver Todos' : sub;
+                const activeClass = isActive 
+                    ? 'bg-ccb-800 text-white font-bold shadow-sm' 
+                    : 'bg-slate-100 text-slate-600 hover:bg-slate-200 font-medium';
+                return `<button onclick="setSubCategory('${sub}')" class="px-3 py-1 rounded-full transition text-xs whitespace-nowrap ${activeClass}">${label}</button>`;
+            }).join('');
+        }
+
+        function setSubCategory(sub) {
+            currentSubCat = sub;
+            renderSubCategoryChips();
+            renderProducts();
+        }
+
+        function filterProducts() {
+            const input = document.getElementById('searchInput');
+            currentSearchQuery = input.value.toLowerCase().trim();
+            document.getElementById('clearSearchBtn').classList.toggle('hidden', currentSearchQuery === '');
+            renderProducts();
+        }
+
+        function clearSearch() {
+            document.getElementById('searchInput').value = '';
+            currentSearchQuery = '';
+            document.getElementById('clearSearchBtn').classList.add('hidden');
+            renderProducts();
+        }
+
+        function resetFilters() {
+            clearSearch();
+            setMainCategory('all');
+        }
+
+        function renderProducts() {
+            const grid = document.getElementById('productsGrid');
+            const noState = document.getElementById('noProductsState');
+
+            let filtered = PRODUCTS.filter(p => {
+                const matchMain = currentMainCat === 'all' || p.category === currentMainCat;
+                const matchSub = currentSubCat === 'all' || p.subCategory === currentSubCat;
+                const matchQuery = p.name.toLowerCase().includes(currentSearchQuery) || 
+                                   p.description.toLowerCase().includes(currentSearchQuery) ||
+                                   p.subCategory.toLowerCase().includes(currentSearchQuery);
+                return matchMain && matchSub && matchQuery;
+            });
+
+            document.getElementById('productCountBadge').textContent = `${filtered.length} artículos`;
+
+            if (filtered.length === 0) {
+                grid.innerHTML = '';
+                noState.classList.remove('hidden');
+                return;
+            }
+
+            noState.classList.add('hidden');
+
+            grid.innerHTML = filtered.map(p => {
+                const cartQty = getCartQuantity(p.id);
+                const isFood = p.category === 'comida';
+                const tagBg = isFood ? 'bg-ccb-50 text-ccb-900' : 'bg-sky-100 text-sky-800';
+
+                return `
+                <div class="bg-white rounded-2xl p-4 border border-slate-200/90 shadow-sm hover:shadow-md transition-all flex flex-col justify-between group relative">
+                    ${p.popular ? `<span class="absolute top-3 right-3 bg-ccb-800 text-white text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full shadow-sm"><i class="fa-solid fa-star text-[9px] mr-1"></i>Popular</span>` : ''}
+                    
+                    <div>
+                        <div class="flex items-center space-x-3 mb-3">
+                            <div class="w-12 h-12 rounded-xl ${p.color} text-white flex items-center justify-center text-xl shadow-md group-hover:scale-105 transition-transform">
+                                <i class="fa-solid ${p.icon}"></i>
+                            </div>
+                            <div>
+                                <span class="text-[10px] font-bold ${tagBg} px-2 py-0.5 rounded-md uppercase tracking-wider">${p.subCategory}</span>
+                                <h4 class="font-bold text-slate-900 text-sm mt-0.5 leading-snug">${p.name}</h4>
+                            </div>
+                        </div>
+
+                        <p class="text-xs text-slate-500 leading-relaxed mb-4 line-clamp-2">${p.description}</p>
+                    </div>
+
+                    <div class="pt-3 border-t border-slate-100 flex items-center justify-between">
+                        <div>
+                            <span class="text-[10px] text-slate-400 block font-medium">Precio</span>
+                            <span class="text-base font-extrabold text-slate-900">$${p.price.toLocaleString('es-CO')}</span>
+                        </div>
+
+                        ${cartQty > 0 ? `
+                            <div class="flex items-center space-x-1 bg-slate-100 p-1 rounded-xl border border-slate-200">
+                                <button onclick="updateQuantity(${p.id}, -1)" class="w-7 h-7 rounded-lg bg-white shadow text-slate-700 hover:bg-slate-200 font-bold flex items-center justify-center transition text-xs">
+                                    <i class="fa-solid fa-minus"></i>
+                                </button>
+                                <span class="w-6 text-center font-extrabold text-xs text-slate-800">${cartQty}</span>
+                                <button onclick="updateQuantity(${p.id}, 1)" class="w-7 h-7 rounded-lg bg-ccb-800 text-white shadow font-bold flex items-center justify-center hover:bg-ccb-900 transition text-xs">
+                                    <i class="fa-solid fa-plus"></i>
+                                </button>
+                            </div>
+                        ` : `
+                            <button onclick="addToCart(${p.id})" class="px-3 py-2 bg-ccb-800 hover:bg-ccb-900 text-white rounded-xl text-xs font-bold transition flex items-center space-x-1.5 shadow-sm active:scale-95">
+                                <i class="fa-solid fa-cart-plus text-xs"></i>
+                                <span>Agregar</span>
+                            </button>
+                        `}
+                    </div>
+                </div>
+                `;
+            }).join('');
+        }
+
+        function getCartQuantity(productId) {
+            const item = cart.find(i => i.id === productId);
+            return item ? item.quantity : 0;
+        }
+
+        function addToCart(productId) {
+            const product = PRODUCTS.find(p => p.id === productId);
+            if (!product) return;
+
+            const existing = cart.find(i => i.id === productId);
+            if (existing) {
+                existing.quantity += 1;
+            } else {
+                cart.push({ ...product, quantity: 1 });
+            }
+
+            showToast(`Agregado: ${product.name}`, 'success');
+            renderCartUI();
+            renderProducts();
+        }
+
+        function updateQuantity(productId, delta) {
+            const item = cart.find(i => i.id === productId);
+            if (!item) return;
+
+            item.quantity += delta;
+            if (item.quantity <= 0) {
+                cart = cart.filter(i => i.id !== productId);
+                showToast(`Eliminado del carrito`, 'info');
+            }
+
+            renderCartUI();
+            renderProducts();
+        }
+
+        function removeFromCart(productId) {
+            cart = cart.filter(i => i.id !== productId);
+            renderCartUI();
+            renderProducts();
+            showToast(`Ítem eliminado`, 'info');
+        }
+
+        function clearCart() {
+            if (cart.length === 0) return;
+            cart = [];
+            renderCartUI();
+            renderProducts();
+            showToast(`Carrito vaciado`, 'info');
+        }
+
+        function renderCartUI() {
+            const totalItems = cart.reduce((acc, item) => acc + item.quantity, 0);
+            const subtotal = cart.reduce((acc, item) => acc + (item.price * item.quantity), 0);
+
+            document.getElementById('cartBadgeCount').textContent = totalItems;
+            document.getElementById('miniCartCount').textContent = `${totalItems} ítems`;
+            document.getElementById('miniCartTotal').textContent = `$${subtotal.toLocaleString('es-CO')}`;
+
+            const miniList = document.getElementById('miniCartItems');
+            if (cart.length === 0) {
+                miniList.innerHTML = `<p class="text-slate-400 italic text-center py-4">Tu carrito está vacío</p>`;
+            } else {
+                miniList.innerHTML = cart.map(item => `
+                    <div class="flex items-center justify-between py-1.5 border-b border-slate-100">
+                        <div class="truncate pr-2">
+                            <span class="font-bold text-slate-800">${item.quantity}x</span>
+                            <span class="text-slate-700">${item.name}</span>
+                        </div>
+                        <span class="font-bold text-slate-900">$${(item.price * item.quantity).toLocaleString('es-CO')}</span>
+                    </div>
+                `).join('');
+            }
+
+            const drawerList = document.getElementById('cartItemsList');
+            if (cart.length === 0) {
+                drawerList.innerHTML = `
+                    <div class="text-center py-12 space-y-3">
+                        <div class="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mx-auto text-slate-400 text-2xl">
+                            <i class="fa-solid fa-basket-shopping"></i>
+                        </div>
+                        <p class="font-bold text-slate-700 text-sm">Tu carrito CCB está vacío</p>
+                        <p class="text-xs text-slate-400">Selecciona alimentos o útiles escolares del catálogo.</p>
+                    </div>
+                `;
+            } else {
+                drawerList.innerHTML = cart.map(item => `
+                    <div class="bg-slate-50 p-3 rounded-2xl border border-slate-200/80 flex items-center justify-between space-x-3">
+                        <div class="w-10 h-10 rounded-xl ${item.color} text-white flex items-center justify-center text-base shrink-0">
+                            <i class="fa-solid ${item.icon}"></i>
+                        </div>
+                        
+                        <div class="flex-1 min-w-0">
+                            <h5 class="font-bold text-slate-900 text-xs truncate">${item.name}</h5>
+                            <span class="text-[11px] text-slate-500">$${item.price.toLocaleString('es-CO')} c/u</span>
+                        </div>
+
+                        <div class="flex items-center space-x-1.5">
+                            <div class="flex items-center bg-white p-1 rounded-lg border border-slate-200">
+                                <button onclick="updateQuantity(${item.id}, -1)" class="w-6 h-6 text-slate-600 hover:bg-slate-100 rounded font-bold text-xs flex items-center justify-center">
+                                    <i class="fa-solid fa-minus text-[10px]"></i>
+                                </button>
+                                <span class="w-5 text-center font-bold text-xs text-slate-800">${item.quantity}</span>
+                                <button onclick="updateQuantity(${item.id}, 1)" class="w-6 h-6 text-ccb-800 hover:bg-slate-100 rounded font-bold text-xs flex items-center justify-center">
+                                    <i class="fa-solid fa-plus text-[10px]"></i>
+                                </button>
+                            </div>
+
+                            <button onclick="removeFromCart(${item.id})" class="p-1.5 text-slate-400 hover:text-red-500 transition">
+                                <i class="fa-solid fa-trash-can text-xs"></i>
+                            </button>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            document.getElementById('cartSubtotal').textContent = `$${subtotal.toLocaleString('es-CO')}`;
+            document.getElementById('cartTotal').textContent = `$${subtotal.toLocaleString('es-CO')}`;
+        }
+
+        function toggleCartDrawer(open) {
+            const drawer = document.getElementById('cartDrawer');
+            const backdrop = document.getElementById('cartDrawerBackdrop');
+
+            if (open) {
+                backdrop.classList.remove('hidden');
+                drawer.classList.remove('translate-x-full');
+            } else {
+                drawer.classList.add('translate-x-full');
+                backdrop.classList.add('hidden');
+            }
+        }
+
+        function processOrder() {
+            if (cart.length === 0) {
+                showToast('Añade al menos un producto al carrito', 'warning');
+                return;
+            }
+
+            const profesor = document.getElementById('profesorName').value.trim();
+            const classroom = document.getElementById('classroomSelect').value;
+            const student = document.getElementById('studentName').value.trim();
+            const notes = document.getElementById('specialNotesInput').value.trim();
+
+            if (!profesor || !classroom || !student) {
+                showToast('Completa Profesor, Salón y Estudiante', 'warning');
+                if (!profesor) document.getElementById('profesorName').focus();
+                else if (!classroom) document.getElementById('classroomSelect').focus();
+                else if (!student) document.getElementById('studentName').focus();
+                toggleCartDrawer(false);
+                return;
+            }
+
+            const orderId = 'CCB-' + Math.floor(10000 + Math.random() * 90000);
+            const now = new Date();
+            const timestamp = now.toLocaleDateString('es-CO') + ' ' + now.toLocaleTimeString('es-CO', { hour: '2-digit', minute: '2-digit' });
+
+            const total = cart.reduce((acc, item) => acc + (item.price * item.quantity), 0);
+
+            const newOrder = {
+                id: orderId,
+                profesor,
+                classroom,
+                student,
+                items: [...cart],
+                notes,
+                total,
+                status: 'Recibido',
+                timestamp
+            };
+
+            ordersList.unshift(newOrder);
+            localStorage.setItem('ccb_orders_db', JSON.stringify(ordersList));
+
+            activeOrder = newOrder;
+
+            cart = [];
+            document.getElementById('specialNotesInput').value = '';
+            renderCartUI();
+            renderProducts();
+            toggleCartDrawer(false);
+
+            renderAdminOrders();
+            updateAdminBadge();
+
+            playBeepSound();
+
+            updateTicketModalUI(activeOrder);
+            document.getElementById('ticketModal').classList.remove('hidden');
+            showToast('¡Comanda CCB enviada con éxito!', 'success');
+        }
+
+        function updateTicketModalUI(order) {
+            if (!order) return;
+
+            document.getElementById('ticketOrderNumber').textContent = `#${order.id}`;
+            document.getElementById('ticketTimestamp').textContent = `Fecha: ${order.timestamp}`;
+            document.getElementById('ticketClassroom').textContent = order.classroom;
+            document.getElementById('ticketProfesor').textContent = order.profesor;
+            document.getElementById('ticketStudent').textContent = order.student;
+
+            const badge = document.getElementById('ticketStatusBadge');
+            const bar = document.getElementById('statusProgressBar');
+
+            if (order.status === 'Recibido') {
+                badge.className = 'text-xs font-extrabold px-2.5 py-1 rounded-full bg-amber-100 text-amber-800';
+                badge.textContent = '1. Recibido en Cafetería';
+                bar.style.width = '33%';
+            } else if (order.status === 'En Preparación') {
+                badge.className = 'text-xs font-extrabold px-2.5 py-1 rounded-full bg-blue-100 text-blue-800 animate-pulse';
+                badge.textContent = '2. En Preparación CCB';
+                bar.style.width = '66%';
+            } else if (order.status === 'Listo para Recoger') {
+                badge.className = 'text-xs font-extrabold px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-800 animate-bounce';
+                badge.textContent = '3. ¡Listo para Recoger!';
+                bar.style.width = '100%';
+            } else if (order.status === 'Entregado') {
+                badge.className = 'text-xs font-extrabold px-2.5 py-1 rounded-full bg-slate-200 text-slate-700';
+                badge.textContent = '4. Entregado';
+                bar.style.width = '100%';
+            }
+
+            const itemsContainer = document.getElementById('ticketItemList');
+            itemsContainer.innerHTML = order.items.map(i => `
+                <div class="flex justify-between items-center border-b border-slate-100 pb-1">
+                    <span><strong class="text-slate-800">${i.quantity}x</strong> ${i.name}</span>
+                    <span class="font-semibold text-slate-800">$${(i.price * i.quantity).toLocaleString('es-CO')}</span>
+                </div>
+            `).join('');
+
+            const notesContainer = document.getElementById('ticketNotesContainer');
+            const notesText = document.getElementById('ticketNotesText');
+            if (order.notes) {
+                notesText.textContent = order.notes;
+                notesContainer.classList.remove('hidden');
+            } else {
+                notesContainer.classList.add('hidden');
+            }
+
+            document.getElementById('ticketTotal').textContent = `$${order.total.toLocaleString('es-CO')}`;
+        }
+
+        function closeTicketModal() {
+            document.getElementById('ticketModal').classList.add('hidden');
+        }
+
+        function switchTab(tab) {
+            const storeView = document.getElementById('storeView');
+            const adminView = document.getElementById('adminView');
+
+            if (tab === 'admin') {
+                storeView.classList.add('hidden');
+                adminView.classList.remove('hidden');
+                renderAdminOrders();
+            } else {
+                adminView.classList.add('hidden');
+                storeView.classList.remove('hidden');
+            }
+        }
+
+        function renderAdminOrders() {
+            const tbody = document.getElementById('adminOrdersTbody');
+            const emptyState = document.getElementById('adminEmptyState');
+
+            if (ordersList.length === 0) {
+                tbody.innerHTML = '';
+                emptyState.classList.remove('hidden');
+                updateAdminStats();
+                return;
+            }
+
+            emptyState.classList.add('hidden');
+
+            tbody.innerHTML = ordersList.map(order => {
+                let statusBadge = '';
+                if (order.status === 'Recibido') {
+                    statusBadge = `<span class="bg-amber-100 text-amber-800 font-bold px-2.5 py-1 rounded-full text-[11px]"><i class="fa-solid fa-clock mr-1"></i>Recibido</span>`;
+                } else if (order.status === 'En Preparación') {
+                    statusBadge = `<span class="bg-blue-100 text-blue-800 font-bold px-2.5 py-1 rounded-full text-[11px]"><i class="fa-solid fa-box-open mr-1"></i>En Preparación</span>`;
+                } else if (order.status === 'Listo para Recoger') {
+                    statusBadge = `<span class="bg-emerald-100 text-emerald-800 font-bold px-2.5 py-1 rounded-full text-[11px] animate-pulse"><i class="fa-solid fa-bell mr-1"></i>¡Listo para Recoger!</span>`;
+                } else {
+                    statusBadge = `<span class="bg-slate-100 text-slate-600 font-bold px-2.5 py-1 rounded-full text-[11px]"><i class="fa-solid fa-circle-check mr-1"></i>Entregado</span>`;
+                }
+
+                const itemsSummary = order.items.map(i => `${i.quantity}x ${i.name}`).join(', ');
+
+                return `
+                <tr class="hover:bg-slate-50/80 transition">
+                    <td class="py-3 px-4 font-mono font-bold text-slate-900">
+                        #${order.id}
+                        <span class="block text-[10px] text-slate-400 font-normal">${order.timestamp}</span>
+                    </td>
+                    <td class="py-3 px-4 font-bold text-slate-800">${order.classroom}</td>
+                    <td class="py-3 px-4">
+                        <span class="font-semibold text-slate-800 block">${order.profesor}</span>
+                        <span class="text-[11px] text-ccb-800 font-medium"><i class="fa-solid fa-user-graduate mr-1"></i>Recoge: ${order.student}</span>
+                    </td>
+                    <td class="py-3 px-4 max-w-xs">
+                        <p class="truncate text-slate-700">${itemsSummary}</p>
+                        ${order.notes ? `<p class="text-[10px] text-ccb-900 italic bg-ccb-50 px-2 py-0.5 rounded mt-1">Nota: ${order.notes}</p>` : ''}
+                    </td>
+                    <td class="py-3 px-4 font-bold text-slate-900">$${order.total.toLocaleString('es-CO')}</td>
+                    <td class="py-3 px-4">${statusBadge}</td>
+                    <td class="py-3 px-4 text-right">
+                        <div class="flex items-center justify-end space-x-1">
+                            ${order.status === 'Recibido' ? `
+                                <button onclick="changeOrderStatus('${order.id}', 'En Preparación')" class="px-2.5 py-1 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg text-[11px] transition">
+                                    Preparar
+                                </button>
+                            ` : ''}
+                            
+                            ${order.status === 'En Preparación' ? `
+                                <button onclick="changeOrderStatus('${order.id}', 'Listo para Recoger')" class="px-2.5 py-1 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-lg text-[11px] transition">
+                                    Avisar Listo
+                                </button>
+                            ` : ''}
+
+                            ${order.status === 'Listo para Recoger' ? `
+                                <button onclick="changeOrderStatus('${order.id}', 'Entregado')" class="px-2.5 py-1 bg-slate-800 hover:bg-slate-900 text-white font-bold rounded-lg text-[11px] transition">
+                                    Entregar
+                                </button>
+                            ` : ''}
+
+                            <button onclick="viewOrderTicket('${order.id}')" title="Ver Ticket" class="p-1.5 text-slate-500 hover:text-slate-800 hover:bg-slate-100 rounded-lg transition">
+                                <i class="fa-solid fa-receipt text-sm"></i>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+                `;
+            }).join('');
+
+            updateAdminStats();
+        }
+
+        function changeOrderStatus(orderId, newStatus) {
+            const order = ordersList.find(o => o.id === orderId);
+            if (!order) return;
+
+            order.status = newStatus;
+            localStorage.setItem('ccb_orders_db', JSON.stringify(ordersList));
+            
+            renderAdminOrders();
+            updateAdminBadge();
+
+            if (activeOrder && activeOrder.id === orderId) {
+                activeOrder = order;
+                updateTicketModalUI(activeOrder);
+            }
+
+            showToast(`Orden #${orderId} actualizada a: ${newStatus}`, 'info');
+        }
+
+        function viewOrderTicket(orderId) {
+            const order = ordersList.find(o => o.id === orderId);
+            if (order) {
+                activeOrder = order;
+                updateTicketModalUI(order);
+                document.getElementById('ticketModal').classList.remove('hidden');
+            }
+        }
+
+        function updateAdminBadge() {
+            const pendingCount = ordersList.filter(o => o.status === 'Recibido' || o.status === 'En Preparación').length;
+            const badge = document.getElementById('pendingBadge');
+            badge.textContent = pendingCount;
+            badge.classList.toggle('hidden', pendingCount === 0);
+        }
+
+        function updateAdminStats() {
+            document.getElementById('statTotalOrders').textContent = ordersList.length;
+            document.getElementById('statPreparingOrders').textContent = ordersList.filter(o => o.status === 'En Preparación').length;
+            document.getElementById('statReadyOrders').textContent = ordersList.filter(o => o.status === 'Listo para Recoger').length;
+
+            const totalSales = ordersList.reduce((acc, o) => acc + o.total, 0);
+            document.getElementById('statTotalSales').textContent = `$${totalSales.toLocaleString('es-CO')}`;
+        }
+
+        function clearAllOrdersConfirm() {
+            if (ordersList.length === 0) return;
+            ordersList = [];
+            localStorage.setItem('ccb_orders_db', JSON.stringify([]));
+            renderAdminOrders();
+            updateAdminBadge();
+            showToast('Historial de despacho limpiado', 'info');
+        }
+
+        function openGithubModal() {
+            document.getElementById('githubModal').classList.remove('hidden');
+        }
+
+        function closeGithubModal() {
+            document.getElementById('githubModal').classList.add('hidden');
+        }
+
+        function playBeepSound() {
+            try {
+                const ctx = new (window.AudioContext || window.webkitAudioContext)();
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(587.33, ctx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(880, ctx.currentTime + 0.15);
+
+                gain.gain.setValueAtTime(0.15, ctx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.3);
+
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+
+                osc.start();
+                osc.stop(ctx.currentTime + 0.3);
+            } catch(e) {}
+        }
+
+        function showToast(message, type = 'info') {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+
+            let icon = 'fa-circle-info text-blue-500';
+            let border = 'border-slate-200';
+
+            if (type === 'success') {
+                icon = 'fa-circle-check text-emerald-500';
+                border = 'border-emerald-200';
+            } else if (type === 'warning') {
+                icon = 'fa-triangle-exclamation text-amber-500';
+                border = 'border-amber-200';
+            }
+
+            toast.className = `bg-white px-4 py-3 rounded-2xl border ${border} shadow-xl flex items-center space-x-3 text-xs font-bold text-slate-800 transition-all duration-300 transform translate-y-4 opacity-0 pointer-events-auto max-w-xs`;
+            toast.innerHTML = `<i class="fa-solid ${icon} text-base"></i><span>${message}</span>`;
+
+            container.appendChild(toast);
+
+            setTimeout(() => {
+                toast.classList.remove('translate-y-4', 'opacity-0');
+            }, 10);
+
+            setTimeout(() => {
+                toast.classList.add('translate-y-4', 'opacity-0');
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        window.onload = function() {
+            initApp();
+        };
+    </script>
+</body>
+</html>
