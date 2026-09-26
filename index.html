@@ -102,14 +102,13 @@
 
                 <div>
                     <label class="block font-semibold text-slate-700 mb-1">Notas Especiales / Especificaciones:</label>
-                    <textarea id="orderNote" rows="2" placeholder="Ej: Sándwich sin cebolla / 2 lápices HD..." class="w-full p-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-brand-500 outline-none text-xs"></textarea>
+                    <textarea id="orderNote" rows="2" placeholder="Ej: Sándwich sin cebolla / 2 lápices..." class="w-full p-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-brand-500 outline-none text-xs"></textarea>
                 </div>
             </div>
         </div>
 
         <!-- Catálogo de Productos -->
         <div class="lg:col-span-2 space-y-4">
-            <!-- Categorías -->
             <div class="flex gap-2 overflow-x-auto pb-2 scrollbar-none">
                 <button onclick="filterCategory('ALL')" class="cat-btn bg-brand-500 text-white px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap">Todos</button>
                 <button onclick="filterCategory('COMIDA')" class="cat-btn bg-white text-slate-700 px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap border">Comida y Snacks</button>
@@ -117,12 +116,11 @@
                 <button onclick="filterCategory('UTILES')" class="cat-btn bg-white text-slate-700 px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap border">Útiles Escolares</button>
             </div>
 
-            <!-- Grilla de productos -->
             <div id="productsGrid" class="grid grid-cols-1 sm:grid-cols-2 gap-4"></div>
         </div>
     </main>
 
-    <!-- Modal Carrito / Confirmación -->
+    <!-- Modal Carrito -->
     <div id="cartModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
         <div class="bg-white max-w-md w-full rounded-2xl p-6 shadow-2xl">
             <div class="flex justify-between items-center border-b pb-3 mb-4">
@@ -146,15 +144,15 @@
     </div>
 
     <script>
-        const CLOUD_DB = 'https://cafeteria-ccb-default-rtdb.firebaseio.com/orders';
+        const SYNC_CHANNEL = 'https://ntfy.sh/ccb_cafeteria_valencia_2026';
 
         const products = [
             { id: 1, name: 'Sándwich Jamón y Queso', price: 6000, category: 'COMIDA', icon: 'fa-hamburger' },
             { id: 2, name: 'Empanada de Carne', price: 3500, category: 'COMIDA', icon: 'fa-cookie' },
             { id: 3, name: 'Ensalada de Frutas', price: 4000, category: 'COMIDA', icon: 'fa-apple-alt' },
-            { id: 4, name: 'Jugo Natural (Lulo/Mora)', price: 3000, category: 'BEBIDAS', icon: 'fa-glass-cheers' },
+            { id: 4, name: 'Jugo Natural', price: 3000, category: 'BEBIDAS', icon: 'fa-glass-cheers' },
             { id: 5, name: 'Agua Mineral 500ml', price: 2000, category: 'BEBIDAS', icon: 'fa-bottle-water' },
-            { id: 6, name: 'Cuaderno Cuadriculado 100h', price: 5000, category: 'UTILES', icon: 'fa-book' },
+            { id: 6, name: 'Cuaderno Cuadriculado', price: 5000, category: 'UTILES', icon: 'fa-book' },
             { id: 7, name: 'Bolígrafo Negro/Azul', price: 1500, category: 'UTILES', icon: 'fa-pen' },
             { id: 8, name: 'Lápiz Mirado 2', price: 1200, category: 'UTILES', icon: 'fa-pencil-alt' },
             { id: 9, name: 'Borrador de Nata', price: 1000, category: 'UTILES', icon: 'fa-eraser' }
@@ -165,7 +163,6 @@
         function renderProducts(cat = 'ALL') {
             const grid = document.getElementById('productsGrid');
             const items = cat === 'ALL' ? products : products.filter(p => p.category === cat);
-            
             grid.innerHTML = items.map(p => `
                 <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-200 flex justify-between items-center">
                     <div class="flex items-center gap-3">
@@ -192,15 +189,9 @@
         }
 
         function updateCartUI() {
-            const badge = document.getElementById('cartBadge');
-            const totalCount = cart.reduce((acc, i) => acc + i.qty, 0);
-            badge.innerText = totalCount;
-
-            const list = document.getElementById('cartItemsList');
-            const totalEl = document.getElementById('cartTotal');
+            document.getElementById('cartBadge').innerText = cart.reduce((acc, i) => acc + i.qty, 0);
             let total = 0;
-
-            list.innerHTML = cart.map(i => {
+            document.getElementById('cartItemsList').innerHTML = cart.map(i => {
                 total += i.price * i.qty;
                 return `
                     <div class="flex justify-between items-center text-sm p-2 bg-slate-50 rounded-xl">
@@ -209,8 +200,7 @@
                     </div>
                 `;
             }).join('');
-
-            totalEl.innerText = `$${total.toLocaleString()}`;
+            document.getElementById('cartTotal').innerText = `$${total.toLocaleString()}`;
         }
 
         function toggleCartModal() {
@@ -224,54 +214,55 @@
             const note = document.getElementById('orderNote').value.trim();
 
             if(!teacher || !room || !student) {
-                alert('Por favor completa todos los campos de identificación (Profesor, Salón y Estudiante).');
+                alert('Completa los campos: Profesor, Salón y Estudiante.');
                 return;
             }
             if(cart.length === 0) {
-                alert('Tu carrito está vacío. Agrega productos antes de enviar.');
+                alert('Agrega al menos un producto al carrito.');
                 return;
             }
 
             const btn = document.getElementById('sendBtn');
             btn.disabled = true;
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Enviando a Cocina...';
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Enviando...';
 
-            const order = {
-                orderCode: 'CCB-' + Math.floor(10000 + Math.random() * 90000),
+            const newOrder = {
+                id: 'CCB-' + Math.floor(10000 + Math.random() * 90000),
                 teacher,
                 room,
                 student,
                 note,
-                items: cart,
+                items: [...cart],
                 total: cart.reduce((acc, i) => acc + (i.price * i.qty), 0),
                 status: 'RECIBIDO',
-                timestamp: new Date().toISOString(),
-                timeString: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+                time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+                timestamp: Date.now()
             };
 
-            try {
-                await fetch(`${CLOUD_DB}.json`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(order)
-                });
+            // Guardar localmente
+            let existingOrders = JSON.parse(localStorage.getItem('ccb_orders') || '[]');
+            existingOrders.push(newOrder);
+            localStorage.setItem('ccb_orders', JSON.stringify(existingOrders));
 
+            try {
+                // Enviar señal en tiempo real a la cocina vía NTFY
+                await fetch(SYNC_CHANNEL, {
+                    method: 'POST',
+                    body: JSON.stringify(newOrder)
+                });
                 alert('¡Pedido enviado exitosamente a la cocina!');
                 cart = [];
                 updateCartUI();
                 toggleCartModal();
             } catch(e) {
-                alert('Ocurrió un problema de conexión al enviar el pedido.');
+                alert('Pedido guardado localmente (sin internet).');
             } finally {
                 btn.disabled = false;
                 btn.innerHTML = '<i class="fas fa-paper-plane"></i> Enviar Pedido a Cocina';
             }
         }
 
-        function filterCategory(cat) {
-            renderProducts(cat);
-        }
-
+        function filterCategory(cat) { renderProducts(cat); }
         document.addEventListener('DOMContentLoaded', () => renderProducts());
     </script>
 </body>
